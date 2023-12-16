@@ -1,31 +1,16 @@
-import { parse } from 'dotenv';
 import {DataModel} from '../models/data.model.js';
 
 export class DataController {
 
-     static async getLinea(req, res) {
+     static async getData(req, res) {
           try{
                const {troncal, linea, corrida} = req.params;
-               if(troncal === 'Sur'){
-                    const result = await getLineasDisponibles();
-                    res.json(result);
-               }
-               if(corrida === 'todos'){
-                    const result = await DataModel.getAll(troncal, linea);
-                    res.json(result);
-                    return;
-               }
-               
-               const result = await DataModel.getLinea(troncal, linea, corrida);
-               res.json(result);
-          }catch (error) {
-               console.log(error);
-          }
-     }
+               const array = corrida.replace(/_/g, "/").split(',');
 
-     static async getDataPrueba(req, res) {
-          try{
-               console.log(req.body);
+               const result = await DataModel.getData(troncal, linea, array);
+
+               res.json(result);
+               
           }catch (error) {
                console.log(error);
           }

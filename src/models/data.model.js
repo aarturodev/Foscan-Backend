@@ -2,7 +2,7 @@ import {getConnection} from "../database/conexion.js";
 
 export class DataModel {
  
-     static async getLinea(troncal, linea, corrida) {
+     static async getData(troncal, linea, corrida) {
           try {
                const pool = await getConnection();
 
@@ -43,37 +43,14 @@ export class DataModel {
                          FROM tabla_publicacion 
                     WHERE Troncal = '${troncal}' 
                          AND Línea = '${linea}'
-                         AND "Corrida de referencia" = '${corrida}' OR "Proveedor Corrida / Tipo / año" = '${corrida}'`;
+                         AND "Corrida de referencia" IN (${corrida.map(value => `'${value}'`).join(',')})`;
 
                const result = await pool.request().query(query);
-                              
-               console.log(query);
+
                return result.recordset;
 
           }catch (error) {
                 console.log(error);
           }
      }
-     static async getAll(troncal, linea) {
-          try {
-               const pool = await getConnection();
-
-               const query = `  
-                    SELECT  línea, Troncal, "Corrida de referencia" as "C.R", "Proveedor Corrida / Tipo / año"
-                         FROM tabla_publicacion 
-                    WHERE Troncal = '${troncal}' 
-                         AND Línea = '${linea}'
-                         AND "Corrida de referencia" = '${corrida}' OR "Proveedor Corrida / Tipo / año" = '${corrida}'`;
-
-               const result = await pool.request().query(query);
-                              
-               console.log(query);
-               return result.recordset;
-
-          }catch (error) {
-                console.log(error);
-          }
-     }
-     
-
 }

@@ -15,6 +15,6 @@ const sqlConfig = {
 }
 
 export async function getConnection() {
- const pool = await mssql.connect(sqlConfig);
+ const pool = mssql.connect(sqlConfig);
      return pool;
 }
