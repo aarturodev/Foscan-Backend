@@ -11,10 +11,14 @@ const sqlConfig = {
     encrypt: true,
     trustServerCertificate: true // change to true for local dev / self-signed certs
   },
-  requestTimeout: 30000
+  requestTimeout: 500000,
 }
 
 export async function getConnection() {
- const pool = mssql.connect(sqlConfig);
-     return pool;
+  try {
+    const pool = mssql.connect(sqlConfig);
+    return pool;
+  } catch (error) {
+    console.log(error);
+  }
 }
