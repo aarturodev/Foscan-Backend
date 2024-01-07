@@ -43,7 +43,8 @@ export class DataModel {
                          FROM tabla_publicacion 
                     WHERE Troncal = '${troncal}' 
                          AND Línea = '${linea}'
-                         AND "Corrida de referencia" IN (${corrida.map(value => `'${value}'`).join(',')})`;
+                         AND "Corrida de referencia" IN (${corrida.map(value => `'${value}'`).join(',')})
+                         ORDER BY "Distancia del reg. Referencia [m]" ASC`;
 
                const result = await pool.request().query(query);
 
