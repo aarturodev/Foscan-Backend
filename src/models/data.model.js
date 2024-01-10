@@ -54,4 +54,29 @@ export class DataModel {
                 console.log(error);
           }
      }
+     static async getGraficas(troncal, linea, corrida) {
+          try {
+               const pool = await getConnection();
+
+               const query = `  
+                    SELECT  
+                         "Distancia del reg. [m]" as distancia_reg,
+                         "Distancia del reg. Referencia [m]" as distancia_reg_ref,
+                         "Altura (m)" as altura,
+                         "Diámetro (mm)" as diametro,
+                         "t. Nominal (mm)" as t_nominal
+                    FROM tabla_publicacion 
+                    WHERE Troncal = '${troncal}' 
+                         AND Línea = '${linea}'
+                         AND "Corrida de referencia" IN (${corrida.map(value => `'${value}'`).join(',')})
+                         ORDER BY "Distancia del reg. Referencia [m]" ASC`;
+
+               const result = await pool.request().query(query);
+
+               return result.recordset;
+
+          }catch (error) {
+                console.log(error);
+          }
+     }
 }
