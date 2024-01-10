@@ -47,6 +47,7 @@ export class DataModel {
                          ORDER BY "Distancia del reg. Referencia [m]" ASC`;
 
                const result = await pool.request().query(query);
+               pool.close();
 
                return result.recordset;
 
@@ -63,8 +64,8 @@ export class DataModel {
                          "Distancia del reg. [m]" as distancia_reg,
                          "Distancia del reg. Referencia [m]" as distancia_reg_ref,
                          "Altura (m)" as altura,
-                         "Diámetro (mm)" as diametro,
-                         "t. Nominal (mm)" as t_nominal
+                         "Diámetro (mm)" / "t. Nominal (mm)" as diamEspe
+
                     FROM tabla_publicacion 
                     WHERE Troncal = '${troncal}' 
                          AND Línea = '${linea}'
@@ -72,6 +73,7 @@ export class DataModel {
                          ORDER BY "Distancia del reg. Referencia [m]" ASC`;
 
                const result = await pool.request().query(query);
+              pool.close();
 
                return result.recordset;
 
