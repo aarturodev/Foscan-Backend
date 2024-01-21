@@ -61,7 +61,8 @@ export class DataModel {
                const query = `  
                     SELECT  
                          "Distancia del reg. [m]" as distancia_reg,
-                         "Altura (m)" as altura
+                         "Altura (m)" as altura,
+                         "Distancia del reg. Referencia [m]" as distancia_reg_ref
                     FROM tabla_publicacion 
                     WHERE Troncal = '${troncal}' 
                          AND Línea = '${linea}'
