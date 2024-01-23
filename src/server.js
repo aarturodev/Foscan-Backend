@@ -1,4 +1,5 @@
 import app from './app.js';
+import './database/conexion.js';
 
 
 app.listen(3000, () => {

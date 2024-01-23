@@ -3,13 +3,13 @@ import {config} from 'dotenv';
 config();
 
 const sqlConfig = {
- user:         process.env.DB_USER,
- password:     process.env.DB_PWD,
- server:       process.env.SERVER,
- database:     process.env.DB_NAME,
+  user: 'Despliegue',
+  password: 'datastarup2023*',
+  server: 'star.database.windows.net',
+  database: 'Inicio',
  options: {
     encrypt: true,
-    trustServerCertificate: true // change to true for local dev / self-signed certs
+    enableArithAbort: true
   },
   requestTimeout: 500000,
 }
@@ -17,6 +17,9 @@ const sqlConfig = {
 export async function getConnection() {
   try {
     const pool = mssql.connect(sqlConfig);
+    if (pool) {
+      console.log('DB is connected');
+    }
     return pool;
   } catch (error) {
     console.log(error);
