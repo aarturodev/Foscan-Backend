@@ -23,5 +23,6 @@ export async function getConnection() {
     return pool;
   } catch (error) {
     console.log(error);
+    
   }
 }
